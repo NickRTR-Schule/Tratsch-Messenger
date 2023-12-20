@@ -1,19 +1,8 @@
 package benutzerschnittstelle;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-
-import java.awt.Color;
+import java.awt.*;
 
 public class Benutzerschnittstelle extends JFrame {
 
@@ -34,16 +23,14 @@ public class Benutzerschnittstelle extends JFrame {
 			System.out.println("Error setting native LAF: " + e);
 		}
 		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Benutzerschnittstelle frame = new Benutzerschnittstelle();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		EventQueue.invokeLater(() -> {
+            try {
+                Benutzerschnittstelle frame = new Benutzerschnittstelle();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 	}
 
 	/**
