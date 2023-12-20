@@ -11,5 +11,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/jules/Library/Mobile Documents/com~apple~CloudDocs/Second Brain/Bildung/Schule/13. Klasse/Informationstechnik/Software/Java/Projektarbeit/Tratsch-Messenger/lib/TratschGemeinsam.jar"/>
 	<classpathentry kind="output" path="out"/>
 </classpath>
