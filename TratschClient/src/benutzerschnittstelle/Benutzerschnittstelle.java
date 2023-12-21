@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import steuerung.Steuerung;
+
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
@@ -29,6 +32,8 @@ public class Benutzerschnittstelle extends JFrame
 	private JButton btnLoeschen;
 	private JTextField txtEmpfaenger;
 
+	
+	private Steuerung dieSteuerung;
 	/**
 	 * Launch the application.
 	 */
@@ -73,6 +78,8 @@ public class Benutzerschnittstelle extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		dieSteuerung = new Steuerung(this);
+		
 		IstAngemeldetBenutzer = new JList();
 		IstAngemeldetBenutzer.setBounds(6, 6, 150, 299);
 		contentPane.add(IstAngemeldetBenutzer);
@@ -100,7 +107,9 @@ public class Benutzerschnittstelle extends JFrame
 		
 		btnAbmelden = new JButton("abmelden");
 		btnAbmelden.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				geklicktAbmelden();
 			}
 		});
 		btnAbmelden.setBounds(132, 317, 117, 29);
@@ -124,5 +133,10 @@ public class Benutzerschnittstelle extends JFrame
 	{
 		LoginFenster dasLoginFenster = new LoginFenster();
 		dasLoginFenster.setVisible(true);
+	}
+	
+	private void geklicktAbmelden()
+	{
+		dieSteuerung.geklicktAbmelden();
 	}
 }
