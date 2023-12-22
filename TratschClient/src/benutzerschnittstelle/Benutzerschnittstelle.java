@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -77,10 +78,14 @@ public class Benutzerschnittstelle extends JFrame
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		dieSteuerung = new Steuerung(this);
-		
-		IstAngemeldetBenutzer = new JList();
+
+        try {
+            dieSteuerung = new Steuerung(this);
+        } catch (IOException e) {
+            // TODO-js: Add Exception Code
+        }
+
+        IstAngemeldetBenutzer = new JList();
 		IstAngemeldetBenutzer.setBounds(6, 6, 150, 299);
 		contentPane.add(IstAngemeldetBenutzer);
 		
