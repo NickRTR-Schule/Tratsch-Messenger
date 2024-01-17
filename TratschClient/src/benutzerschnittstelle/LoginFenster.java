@@ -67,11 +67,6 @@ public class LoginFenster extends JDialog {
         this.dispose();
     }
 
-    private void geklicktAnmelden() {
-        String benutzername = txtBenutzername.getText();
-        String passwort = new String(txtPassword.getPassword());
-        //dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
-
 	private void geklicktAnmelden()
 	{
 		System.out.println("Test");
