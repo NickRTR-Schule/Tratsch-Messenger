@@ -58,12 +58,13 @@ public class Netzwerk {
 
     public void meldeAn(String pBenutzername, String passwort) throws IOException {
         benutzername = pBenutzername;
+        // TODO: change
         angemeldet = true;
         outputStream.writeObject(new ClientBotschaftLogin(pBenutzername, passwort));
     }
 
     public void schliesseVerbindung() throws IOException {
-        socket.close();
+        outputStream.writeObject(new ClientBotschaftLogout(benutzername));
     }
 
     public void sendeTextnachricht(String[] pEmpfaenger, String pTextnachricht) throws IOException {

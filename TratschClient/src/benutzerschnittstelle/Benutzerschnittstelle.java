@@ -5,9 +5,9 @@ import steuerung.Steuerung;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import steuerung.Steuerung;
-
 import java.awt.*;
+import java.util.ArrayList;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -28,9 +28,6 @@ public class Benutzerschnittstelle extends JFrame
 
 	private Steuerung dieSteuerung;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args)
 	{
 		try
@@ -55,8 +52,7 @@ public class Benutzerschnittstelle extends JFrame
 		});
 	}
 
-	public Benutzerschnittstelle()
-	{
+	public Benutzerschnittstelle() {
 		setTitle("Tratsch");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 522, 386);
@@ -66,12 +62,9 @@ public class Benutzerschnittstelle extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		try
-		{
+		try {
 			dieSteuerung = new Steuerung(this);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// TODO-js: Add Exception Code: show exception message in window
 		}
 
@@ -110,6 +103,12 @@ public class Benutzerschnittstelle extends JFrame
 				geklicktAbmelden();
 			}
 		});
+		btnAbmelden = new JButton("abmelden");
+		btnAbmelden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				geklicktAbmelden();
+			}
+		});
 		btnAbmelden.setBounds(132, 317, 117, 29);
 		contentPane.add(btnAbmelden);
 
@@ -126,6 +125,7 @@ public class Benutzerschnittstelle extends JFrame
 		contentPane.add(txtEmpfaenger);
 		txtEmpfaenger.setColumns(10);
 	}
+	}
 
 	private void oeffneLoginFenster()
 	{
@@ -138,8 +138,52 @@ public class Benutzerschnittstelle extends JFrame
 		dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
 	}
 
-	private void geklicktAbmelden()
-	{
-		dieSteuerung.geklicktAbmelden();
+	private void geklicktAnmelden() {
+		LoginFenster dasLoginFenster = new LoginFenster(this);
+		dasLoginFenster.setVisible(true);
 	}
+
+	private void geklicktAbmelden() {
+		//dieSteuerung.geklicktAbmelden();
+	}
+
+	private void ausgewaehltEmpfaenger() {
+		ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+	}
+
+	private void erfolgreichAbgemeldet() {
+
+	}
+
+	public void erfolgreichAngemeldet(String pBenutzername) {
+
+	}
+
+	private void geklicktLoeschen() {
+
+	}
+
+	private void geklicktSenden() {
+
+	}
+
+	private void loescheEingabeTextnachricht() {
+
+	}
+
+	public void zeigeAngemeldeteBenutzer(String pAngemeldeteBenutzer) {
+
+	}
+
+	private void zeigeFenstertitel(String pBenutzername) {
+
+	}
+
+	public void zeigeMeldung(String pMeldung) {
+
+	}
+
+	public void zeigeTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
+
+    }
 }
