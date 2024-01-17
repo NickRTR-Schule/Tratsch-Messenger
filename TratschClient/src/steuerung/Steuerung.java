@@ -30,10 +30,6 @@ public class Steuerung {
 		dasNetzwerk.meldeAb();
 	}
 	
-	public void geklicktAnmelden(String pBenutzername, String pPassword) {
-		
-	}
-	
 	public boolean istAngemeldet() {
 		
 	}
@@ -48,5 +44,18 @@ public class Steuerung {
 	
 	public void zeigeMeldung(String pMeldung) {
 		dieBenutzerschnittstelle.zeigeMeldung(pMeldung);
+	}
+
+	public void geklicktAnmelden(String pBenutzername, String pPasswort)
+	{
+		try
+		{
+			dasNetzwerk.meldeAn(pBenutzername, pPasswort);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

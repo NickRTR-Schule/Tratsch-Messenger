@@ -12,7 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class Benutzerschnittstelle extends JFrame {
+public class Benutzerschnittstelle extends JFrame
+{
 
 	private final JPanel contentPane;
 	private final JList IstAngemeldetBenutzer;
@@ -27,11 +28,30 @@ public class Benutzerschnittstelle extends JFrame {
 
 	private Steuerung dieSteuerung;
 
-	private ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<String>();
+	public static void main(String[] args)
+	{
+		try
+		{
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error setting native LAF: " + e);
+		}
 
-	/**
-	 * Create the frame.
-	 */
+		EventQueue.invokeLater(() -> {
+			try
+			{
+				Benutzerschnittstelle frame = new Benutzerschnittstelle();
+				frame.setVisible(true);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		});
+	}
+
 	public Benutzerschnittstelle() {
 		setTitle("Tratsch");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,14 +85,24 @@ public class Benutzerschnittstelle extends JFrame {
 		contentPane.add(txtEingabeTextnachricht);
 
 		btnAnmelden = new JButton("anmelden");
-		btnAnmelden.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
+		btnAnmelden.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				oeffneLoginFenster();
 			}
 		});
 		btnAnmelden.setBounds(6, 317, 117, 29);
 		contentPane.add(btnAnmelden);
 
+		btnAbmelden = new JButton("abmelden");
+		btnAbmelden.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				geklicktAbmelden();
+			}
+		});
 		btnAbmelden = new JButton("abmelden");
 		btnAbmelden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -95,29 +125,17 @@ public class Benutzerschnittstelle extends JFrame {
 		contentPane.add(txtEmpfaenger);
 		txtEmpfaenger.setColumns(10);
 	}
+	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try
-		{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch (Exception e)
-		{
-			System.out.println("Error setting native LAF: " + e);
-		}
+	private void oeffneLoginFenster()
+	{
+		LoginFenster dasLoginFenster = new LoginFenster(this);
+		dasLoginFenster.setVisible(true);
+	}
 
-		EventQueue.invokeLater(() -> {
-			try {
-				Benutzerschnittstelle frame = new Benutzerschnittstelle();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-
+	public void geklicktAnmelden(String pBenutzername, String pPasswort)
+	{
+		dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
 	}
 
 	private void geklicktAnmelden() {
