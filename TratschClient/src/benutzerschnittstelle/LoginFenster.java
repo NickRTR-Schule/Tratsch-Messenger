@@ -1,74 +1,119 @@
 package benutzerschnittstelle;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class LoginFenster extends JFrame {
+public class LoginFenster extends JDialog
+{
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private final JPanel contentPanel = new JPanel();
 	private JTextField txtBenutzername;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
+	private JButton btnAnmelden;
+	private JButton btnAbbrechen;
+	private boolean geklicktAnmelden;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginFenster frame = new LoginFenster();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static void main(String[] args)
+	{
+		try
+		{
+			LoginFenster dialog = new LoginFenster();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the dialog.
 	 */
-	public LoginFenster() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 139, 227);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	public LoginFenster()
+	{
+		setTitle("Anmeldung");
+		setBounds(100, 100, 149, 245);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		{
+			JLabel lblBenutzername = new JLabel("Benutzername");
+			lblBenutzername.setBounds(6, 6, 118, 16);
+			contentPanel.add(lblBenutzername);
+		}
+		{
+			txtBenutzername = new JTextField();
+			txtBenutzername.setBounds(6, 34, 130, 26);
+			contentPanel.add(txtBenutzername);
+			txtBenutzername.setColumns(10);
+		}
+		{
+			JLabel lblPassword = new JLabel("Password");
+			lblPassword.setBounds(6, 72, 61, 16);
+			contentPanel.add(lblPassword);
+		}
 		
-		txtBenutzername = new JTextField();
-		txtBenutzername.setBounds(6, 28, 130, 26);
-		contentPane.add(txtBenutzername);
-		txtBenutzername.setColumns(10);
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(6, 100, 130, 26);
+		contentPanel.add(txtPassword);
 		
-		JLabel lblBenutzername = new JLabel("Benutzername");
-		lblBenutzername.setBounds(10, 7, 104, 16);
-		contentPane.add(lblBenutzername);
+		btnAnmelden = new JButton("anmelden");
+		btnAnmelden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				geklicktAnmelden();
+			}
+		});
+		btnAnmelden.setBounds(7, 138, 117, 29);
+		contentPanel.add(btnAnmelden);
 		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(11, 66, 122, 16);
-		contentPane.add(lblPassword);
-		
-		txtPassword = new JTextField();
-		txtPassword.setColumns(10);
-		txtPassword.setBounds(6, 85, 130, 26);
-		contentPane.add(txtPassword);
-		
-		JButton btnAnmelden = new JButton("anmelden");
-		btnAnmelden.setBounds(2, 127, 134, 29);
-		contentPane.add(btnAnmelden);
-		
-		JButton btnAbbrechen = new JButton("abbrechen");
-		btnAbbrechen.setBounds(3, 157, 133, 29);
-		contentPane.add(btnAbbrechen);
+		btnAbbrechen = new JButton("abbrechen");
+		btnAbbrechen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				geklicktAbbrechen();
+			}
+		});
+		btnAbbrechen.setBounds(7, 181, 117, 29);
+		contentPanel.add(btnAbbrechen);
 	}
-
+	
+	private void geklicktAbbrechen()
+	{
+		this.dispose();
+	}
+	
+	private void geklicktAnmelden()
+	{
+		geklicktAnmelden = true;
+		
+	}
+	
+	public boolean hatGeklicktAnmelden()
+	{
+		return geklicktAnmelden;
+	}
+	
+	public String liesBenutzername()
+	{
+		return txtBenutzername.getText();
+	}
+	
+	public String liesPassword()
+	{
+		return new String(txtPassword.getPassword());
+	}
 }
