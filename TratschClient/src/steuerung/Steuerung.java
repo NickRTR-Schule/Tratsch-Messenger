@@ -6,56 +6,53 @@ import netzwerk.Netzwerk;
 import java.io.IOException;
 
 public class Steuerung {
-	
-	private Benutzerschnittstelle dieBenutzerschnittstelle;
-	private Netzwerk dasNetzwerk = new Netzwerk(this);
-	
-	public Steuerung(Benutzerschnittstelle pBenutzerschnittstelle) {
-		dieBenutzerschnittstelle = pBenutzerschnittstelle;
-	}
 
-	public void erfolgreichAbgemeldet() {
-		
-	}
-	
-	public void erfolgreichAngemeldet(String pBenutzename) {
-		
-	}
-	
-	public void erhaltenTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
-		dieBenutzerschnittstelle.zeigeTextnachricht(pAbsender, pEmpfaenger, pTextnachricht);
-	}
-	
-	public void geklicktAbmelden() {
-		dasNetzwerk.meldeAb();
-	}
-	
-	public boolean istAngemeldet() {
-		
-	}
-	
-	public void sendeTextnachricht(String[] pEmpfaenger, String pTextnachricht) {
-		dasNetzwerk.sendeTextnachricht(pEmpfaenger, pTextnachricht);
-	}
-	
-	public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-		
-	}
-	
-	public void zeigeMeldung(String pMeldung) {
-		dieBenutzerschnittstelle.zeigeMeldung(pMeldung);
-	}
+    private final Benutzerschnittstelle dieBenutzerschnittstelle;
+    private final Netzwerk dasNetzwerk;
 
-	public void geklicktAnmelden(String pBenutzername, String pPasswort)
-	{
-		try
-		{
-			dasNetzwerk.meldeAn(pBenutzername, pPasswort);
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    public Steuerung(Benutzerschnittstelle pBenutzerschnittstelle) throws IOException {
+        dieBenutzerschnittstelle = pBenutzerschnittstelle;
+        dasNetzwerk = new Netzwerk(this);
+    }
+
+    public void erfolgreichAbgemeldet() {
+
+    }
+
+    public void erfolgreichAngemeldet(String pBenutzename) {
+
+    }
+
+    public void erhaltenTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
+        dieBenutzerschnittstelle.zeigeTextnachricht(pAbsender, pEmpfaenger, pTextnachricht);
+    }
+
+    public void geklicktAbmelden() {
+        dasNetzwerk.meldeAb();
+    }
+
+    public boolean istAngemeldet() {
+        return dasNetzwerk.istAngemeldet();
+    }
+
+    public void sendeTextnachricht(String[] pEmpfaenger, String pTextnachricht) throws IOException {
+        dasNetzwerk.sendeTextnachricht(pEmpfaenger, pTextnachricht);
+    }
+
+    public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
+
+    }
+
+    public void zeigeMeldung(String pMeldung) {
+        dieBenutzerschnittstelle.zeigeMeldung(pMeldung);
+    }
+
+    public void geklicktAnmelden(String pBenutzername, String pPasswort) {
+        try {
+            dasNetzwerk.meldeAn(pBenutzername, pPasswort);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }
