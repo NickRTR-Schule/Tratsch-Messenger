@@ -3,12 +3,19 @@ package benutzerschnittstelle;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
+
+import steuerung.Steuerung;
 
 public class Benutzerschnittstelle extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtEmpfaenger;
+
+	private Steuerung dieSteuerung = new Steuerung();
+
+	private ArrayList<String> ausgewaehlteEmpfaenger;
 
 	/**
 	 * Launch the application.
@@ -87,5 +94,52 @@ public class Benutzerschnittstelle extends JFrame {
 		txtEmpfaenger.setBounds(211, 203, 130, 26);
 		contentPane.add(txtEmpfaenger);
 		txtEmpfaenger.setColumns(10);
+	}
+
+	private void ausgewaehltEmpfaenger() {
+		ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+	}
+
+	private void erfolgreichAbgemeldet() {
+
+	}
+
+	public void erfolgreichAngemeldet(String pBenutzername) {
+
+	}
+
+	private void geklicktAbmelden() {
+
+	}
+
+	private void geklicktAnmelden() {
+	}
+
+	private void geklicktLoeschen() {
+
+	}
+
+	private void geklicktSenden() {
+
+	}
+
+	private void loescheEingabeTextnachricht() {
+
+	}
+
+	public void zeigeAngemeldeteBenutzer(String pAngemeldeteBenutzer) {
+
+	}
+
+	private void zeigeFenstertitel(String pBenutzername) {
+
+	}
+
+	public void zeigeMeldung(String pMeldung) {
+
+	}
+
+	public void zeigeTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
+
 	}
 }
