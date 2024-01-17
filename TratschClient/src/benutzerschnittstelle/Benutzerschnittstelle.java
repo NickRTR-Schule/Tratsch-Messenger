@@ -4,6 +4,9 @@ import steuerung.Steuerung;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import steuerung.Steuerung;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +24,6 @@ public class Benutzerschnittstelle extends JFrame {
     private final JButton btnSenden;
     private final JButton btnLoeschen;
     private final JTextField txtEmpfaenger;
-
 
     private Steuerung dieSteuerung;
 
@@ -63,7 +65,7 @@ public class Benutzerschnittstelle extends JFrame {
         btnAnmelden = new JButton("anmelden");
         btnAnmelden.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                geklicktAnmelden();
+                
             }
         });
         btnAnmelden.setBounds(6, 317, 117, 29);
@@ -91,36 +93,39 @@ public class Benutzerschnittstelle extends JFrame {
         contentPane.add(txtEmpfaenger);
         txtEmpfaenger.setColumns(10);
     }
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println("Error setting native LAF: " + e);
-        }
-
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Benutzerschnittstelle frame = new Benutzerschnittstelle();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try
+		{
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error setting native LAF: " + e);
+		}
+		
+		EventQueue.invokeLater(() -> {
+            try {
+                Benutzerschnittstelle frame = new Benutzerschnittstelle();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
+       
     }
 
     private void geklicktAnmelden() {
-        LoginFenster dasLoginFenster = new LoginFenster();
+        LoginFenster dasLoginFenster = new LoginFenster(this);
         dasLoginFenster.setVisible(true);
     }
-
-    private void geklicktAbmelden() {
-        dieSteuerung.geklicktAbmelden();
-    }
+	
+	
+	private void geklicktAbmelden()
+	{
+		dieSteuerung.geklicktAbmelden();
+	}
 }
