@@ -22,7 +22,7 @@ public class Netzwerk {
     public Netzwerk(Steuerung pSteuerung) throws IOException {
         dieSteuerung = pSteuerung;
         dieKonfiguration = new Konfiguration("localhost", 8080);
-        socket = new Socket(dieKonfiguration.liesHost(), dieKonfiguration.liesPort());
+        socket = new Socket(dieKonfiguration.liesHost(), dieKonfiguration.liesPort()); //Throws Error
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         inputStream = new ObjectInputStream(socket.getInputStream());
         final Thread inputThread = new Thread(() -> {

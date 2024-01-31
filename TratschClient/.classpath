@@ -11,6 +11,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/TratschGemeinsam"/>
+	<classpathentry kind="lib" path="E:/Leon/Workspace_Freudenmann_Leon/Tratsch-Messenger/lib/TratschGemeinsam.jar"/>
 	<classpathentry kind="output" path="out"/>
 </classpath>
