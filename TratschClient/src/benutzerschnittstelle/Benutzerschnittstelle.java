@@ -3,6 +3,7 @@ package benutzerschnittstelle;
 import steuerung.Steuerung;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -137,7 +138,7 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktLoeschen() {
-
+    	
     }
 
     private void geklicktSenden() {
@@ -145,7 +146,7 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void loescheEingabeTextnachricht() {
-
+    	txtEingabeTextnachricht.setText("");
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
@@ -153,14 +154,17 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void zeigeFenstertitel(String pBenutzername) {
-
+    	setTitle("Tratsch " + pBenutzername);
     }
 
     public void zeigeMeldung(String pMeldung) {
-
+    	JOptionPane.showMessageDialog(this, pMeldung);
     }
 
     public void zeigeTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
-
+    	txtTextnachrichten.append(pAbsender + " an " + pEmpfaenger + ":/r/n");
+    	txtTextnachrichten.append(pTextnachricht + "/r/n");
+    	txtTextnachrichten.append("---/r/n");
+    	
     }
 }
