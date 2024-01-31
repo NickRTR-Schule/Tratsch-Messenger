@@ -39,7 +39,7 @@ public class Benutzerschnittstelle extends JFrame {
         try {
             dieSteuerung = new Steuerung(this);
         } catch (IOException e) {
-        	JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            // TODO-js: Add Exception Code: show exception message in window
         }
 
         IstAngemeldetBenutzer = new JList();
@@ -165,6 +165,5 @@ public class Benutzerschnittstelle extends JFrame {
     	txtTextnachrichten.append(pAbsender + " an " + pEmpfaenger + ":/r/n");
     	txtTextnachrichten.append(pTextnachricht + "/r/n");
     	txtTextnachrichten.append("---/r/n");
-    	
     }
 }
