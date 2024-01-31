@@ -93,6 +93,11 @@ public class Benutzerschnittstelle extends JFrame {
         });
         btnLoeschen.setBounds(399, 317, 117, 29);
         contentPane.add(btnLoeschen);
+        btnLoeschen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                geklicktLoeschen();
+            }
+        });
 
         txtEmpfaenger = new JTextField();
         txtEmpfaenger.setBounds(196, 185, 320, 26);
@@ -155,7 +160,7 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktLoeschen() {
-    	
+    	loescheEingabeTextnachricht();
     }
 
     private void geklicktSenden() {
@@ -165,7 +170,7 @@ public class Benutzerschnittstelle extends JFrame {
     		try
 			{
 				dieSteuerung.sendeTextnachricht(empfaenger, txtEingabeTextnachricht.getText());
-				geklicktLoeschen();
+				loescheEingabeTextnachricht();
 			}
 			catch (IOException e)
 			{
@@ -173,7 +178,7 @@ public class Benutzerschnittstelle extends JFrame {
 			}
     	}
     }
-
+    
     private void loescheEingabeTextnachricht() {
     	txtEingabeTextnachricht.setText("");
     }
