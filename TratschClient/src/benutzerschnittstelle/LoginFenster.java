@@ -46,7 +46,6 @@ public class LoginFenster extends JDialog {
         btnAnmelden = new JButton("anmelden");
         btnAnmelden.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("BTN Test");
                 geklicktAnmelden();
             }
         });
@@ -69,11 +68,9 @@ public class LoginFenster extends JDialog {
 
 	private void geklicktAnmelden()
 	{
-		System.out.println("Test");
 		String benutzername = txtBenutzername.getText();
 		String passwort = new String(txtPassword.getPassword());
 		dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
-		
 		this.dispose();
 	}
 
