@@ -38,7 +38,7 @@ public class Benutzerschnittstelle extends JFrame {
         try {
             dieSteuerung = new Steuerung(this);
         } catch (IOException e) {
-            // TODO-js: Add Exception Code: show exception message in window
+        	JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         IstAngemeldetBenutzer = new JList();
