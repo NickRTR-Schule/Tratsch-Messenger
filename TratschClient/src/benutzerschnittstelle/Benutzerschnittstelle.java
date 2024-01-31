@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class Benutzerschnittstelle extends JFrame {
 
     private final JPanel contentPane;
-    private final JList IstAngemeldetBenutzer;
+    DefaultListModel<String> model = new DefaultListModel<>();
+    private final JList<String> IstAngemeldetBenutzer;
     private final JTextArea txtTextnachrichten;
     private final JLabel lblAn;
     private final JTextArea txtEingabeTextnachricht;
@@ -42,7 +43,7 @@ public class Benutzerschnittstelle extends JFrame {
             // TODO-js: Add Exception Code: show exception message in window
         }
 
-        IstAngemeldetBenutzer = new JList();
+        IstAngemeldetBenutzer = new JList<>(model);
         IstAngemeldetBenutzer.setBounds(6, 6, 150, 299);
         contentPane.add(IstAngemeldetBenutzer);
 
@@ -122,7 +123,7 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktAbmelden() {
-        //dieSteuerung.geklicktAbmelden();
+        dieSteuerung.geklicktAbmelden();
     }
 
     private void ausgewaehltEmpfaenger() {
@@ -150,7 +151,10 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-
+    	for(int i = 0; i < pAngemeldeteBenutzer.length; i++)
+    	{
+    		model.addElement
+    	}
     }
 
     private void zeigeFenstertitel(String pBenutzername) {
