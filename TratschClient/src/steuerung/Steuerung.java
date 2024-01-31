@@ -47,12 +47,7 @@ public class Steuerung {
         dieBenutzerschnittstelle.zeigeMeldung(pMeldung);
     }
 
-    public void geklicktAnmelden(String pBenutzername, String pPasswort) {
-        try {
-            dasNetzwerk.meldeAn(pBenutzername, pPasswort);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void geklicktAnmelden(String pBenutzername, String pPasswort) throws IOException {
+    	dasNetzwerk.meldeAn(pBenutzername, pPasswort);
     }
 }
