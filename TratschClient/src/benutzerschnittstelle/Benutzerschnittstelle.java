@@ -128,8 +128,8 @@ public class Benutzerschnittstelle extends JFrame {
         ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
     }
 
-    private void erfolgreichAbgemeldet() {
-
+    public void erfolgreichAbgemeldet() {
+    	
     }
 
     public void erfolgreichAngemeldet(String pBenutzername) {
@@ -148,7 +148,7 @@ public class Benutzerschnittstelle extends JFrame {
 
     }
 
-    public void zeigeAngemeldeteBenutzer(String pAngemeldeteBenutzer) {
+    public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
 
     }
 

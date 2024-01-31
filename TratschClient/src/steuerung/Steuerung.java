@@ -16,11 +16,11 @@ public class Steuerung {
     }
 
     public void erfolgreichAbgemeldet() {
-
+    	dieBenutzerschnittstelle.erfolgreichAbgemeldet();
     }
 
     public void erfolgreichAngemeldet(String pBenutzename) {
-
+    	dieBenutzerschnittstelle.erfolgreichAngemeldet(pBenutzename);
     }
 
     public void erhaltenTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
@@ -40,7 +40,7 @@ public class Steuerung {
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-
+    	dieBenutzerschnittstelle.zeigeAngemeldeteBenutzer(pAngemeldeteBenutzer);
     }
 
     public void zeigeMeldung(String pMeldung) {
