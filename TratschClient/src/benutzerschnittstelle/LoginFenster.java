@@ -68,10 +68,17 @@ public class LoginFenster extends JDialog {
 
 	private void geklicktAnmelden()
 	{
-		String benutzername = txtBenutzername.getText();
-		String passwort = new String(txtPassword.getPassword());
-		dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
-		this.dispose();
+		if (txtBenutzername.getText().isEmpty() || txtPassword.getPassword().toString() == null)
+		{
+			JOptionPane.showMessageDialog(this, "Bitte geben Sie einen Benutzernamen und ein Passwort ein", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}		
+		else
+		{
+			String benutzername = txtBenutzername.getText();
+			String passwort = new String(txtPassword.getPassword());
+			dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
+			this.dispose();
+		}
 	}
 
     public boolean hatGeklicktAnmelden() {

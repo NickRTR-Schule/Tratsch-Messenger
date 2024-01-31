@@ -40,7 +40,7 @@ public class Benutzerschnittstelle extends JFrame {
         try {
             dieSteuerung = new Steuerung(this);
         } catch (IOException e) {
-            // TODO-js: Add Exception Code: show exception message in window
+        	JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
         IstAngemeldetBenutzer = new JList<>(model);
@@ -79,11 +79,26 @@ public class Benutzerschnittstelle extends JFrame {
 
         btnSenden = new JButton("senden");
         btnSenden.setBounds(261, 317, 117, 29);
+        btnSenden.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                geklicktSenden();
+            }
+        });
         contentPane.add(btnSenden);
 
         btnLoeschen = new JButton("löschen");
+        btnLoeschen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                geklicktLoeschen();
+            }
+        });
         btnLoeschen.setBounds(399, 317, 117, 29);
         contentPane.add(btnLoeschen);
+        btnLoeschen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                geklicktLoeschen();
+            }
+        });
 
         txtEmpfaenger = new JTextField();
         txtEmpfaenger.setBounds(196, 185, 320, 26);
@@ -114,7 +129,14 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     public void geklicktAnmelden(String pBenutzername, String pPasswort) {
-        dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
+        try
+		{
+			dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
+		}
+		catch (IOException e)
+		{
+        	JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
     }
 
     private void geklicktAnmelden() {
@@ -139,13 +161,25 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktLoeschen() {
-    	
+    	loescheEingabeTextnachricht();
     }
 
     private void geklicktSenden() {
-
+    	if (ausgewaehlteEmpfaenger.size() != 0 && txtEingabeTextnachricht.getText() != null)
+    	{
+    		String[] empfaenger = (String[]) ausgewaehlteEmpfaenger.toArray();
+    		try
+			{
+				dieSteuerung.sendeTextnachricht(empfaenger, txtEingabeTextnachricht.getText());
+				loescheEingabeTextnachricht();
+			}
+			catch (IOException e)
+			{
+	        	JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+    	}
     }
-
+    
     private void loescheEingabeTextnachricht() {
     	txtEingabeTextnachricht.setText("");
     }
