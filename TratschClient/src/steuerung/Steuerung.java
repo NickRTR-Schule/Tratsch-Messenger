@@ -16,11 +16,11 @@ public class Steuerung {
     }
 
     public void erfolgreichAbgemeldet() {
-    	dieBenutzerschnittstelle.erfolgreichAbgemeldet();
+        dieBenutzerschnittstelle.erfolgreichAbgemeldet();
     }
 
     public void erfolgreichAngemeldet(String pBenutzename) {
-    	dieBenutzerschnittstelle.erfolgreichAngemeldet(pBenutzename);
+        dieBenutzerschnittstelle.erfolgreichAngemeldet(pBenutzename);
     }
 
     public void erhaltenTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
@@ -40,7 +40,7 @@ public class Steuerung {
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-    	dieBenutzerschnittstelle.zeigeAngemeldeteBenutzer(pAngemeldeteBenutzer);
+        dieBenutzerschnittstelle.zeigeAngemeldeteBenutzer(pAngemeldeteBenutzer);
     }
 
     public void zeigeMeldung(String pMeldung) {
@@ -48,6 +48,6 @@ public class Steuerung {
     }
 
     public void geklicktAnmelden(String pBenutzername, String pPasswort) throws IOException {
-    	dasNetzwerk.meldeAn(pBenutzername, pPasswort);
+        dasNetzwerk.meldeAn(pBenutzername, pPasswort);
     }
 }

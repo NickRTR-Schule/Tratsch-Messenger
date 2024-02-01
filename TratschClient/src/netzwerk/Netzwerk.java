@@ -7,6 +7,7 @@ import steuerung.Steuerung;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Netzwerk {
@@ -22,6 +23,19 @@ public class Netzwerk {
     public Netzwerk(Steuerung pSteuerung) throws IOException {
         dieSteuerung = pSteuerung;
         dieKonfiguration = new Konfiguration("localhost", 8080);
+        // TEST CODE
+        Thread server = new Thread(() -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(8080);
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    new ObjectOutputStream(socket.getOutputStream()).writeObject(new Object());
+                    socket.close();
+                }
+            } catch (Exception e) {
+            }
+        });
+        server.start();
         socket = new Socket(dieKonfiguration.liesHost(), dieKonfiguration.liesPort()); //Throws Error
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         inputStream = new ObjectInputStream(socket.getInputStream());
@@ -30,7 +44,7 @@ public class Netzwerk {
                 final Botschaft botschaftIn = (Botschaft) inputStream.readObject();
                 behandleBotschaft(botschaftIn);
             } catch (Exception ignored) {
-
+                // Ignore Exception
             }
         });
         inputThread.start();
