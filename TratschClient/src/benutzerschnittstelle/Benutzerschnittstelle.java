@@ -1,7 +1,6 @@
 package benutzerschnittstelle;
 
 import steuerung.Steuerung;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -23,7 +22,8 @@ public class Benutzerschnittstelle extends JFrame {
     private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
     DefaultListModel<String> model = new DefaultListModel<>();
     private Steuerung dieSteuerung;
-
+    private LoginFenster dasLoginFenster;
+    
     public Benutzerschnittstelle() {
         setTitle("Tratsch");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,13 +101,17 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void oeffneLoginFenster() {
-        LoginFenster dasLoginFenster = new LoginFenster(this);
-        dasLoginFenster.setVisible(true);
+    	if (dasLoginFenster == null)
+    	{
+    		dasLoginFenster = new LoginFenster(this);
+    		dasLoginFenster.setVisible(true);    		
+    	}
     }
 
     public void geklicktAnmelden(String pBenutzername, String pPasswort) {
         try {
             dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
+            dasLoginFenster = null;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
