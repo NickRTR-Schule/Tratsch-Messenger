@@ -27,7 +27,7 @@ public class Steuerung {
         dieBenutzerschnittstelle.zeigeTextnachricht(pAbsender, pEmpfaenger, pTextnachricht);
     }
 
-    public void geklicktAbmelden() {
+    public void geklicktAbmelden() throws IOException {
         dasNetzwerk.meldeAb();
     }
 

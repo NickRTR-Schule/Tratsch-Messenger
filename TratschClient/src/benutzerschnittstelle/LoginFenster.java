@@ -3,9 +3,11 @@ package benutzerschnittstelle;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.Serial;
 
 public class LoginFenster extends JDialog {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private final JPanel contentPanel = new JPanel();
     private final JTextField txtBenutzername;

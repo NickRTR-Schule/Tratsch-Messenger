@@ -1,6 +1,7 @@
 package benutzerschnittstelle;
 
 import steuerung.Steuerung;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class Benutzerschnittstelle extends JFrame {
     DefaultListModel<String> model = new DefaultListModel<>();
     private Steuerung dieSteuerung;
     private LoginFenster dasLoginFenster;
-    
+
     public Benutzerschnittstelle() {
         setTitle("Tratsch");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,11 +102,10 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void oeffneLoginFenster() {
-    	if (dasLoginFenster == null)
-    	{
-    		dasLoginFenster = new LoginFenster(this);
-    		dasLoginFenster.setVisible(true);    		
-    	}
+        if (dasLoginFenster == null) {
+            dasLoginFenster = new LoginFenster(this);
+            dasLoginFenster.setVisible(true);
+        }
     }
 
     public void geklicktAnmelden(String pBenutzername, String pPasswort) {
@@ -123,7 +123,11 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktAbmelden() {
-        dieSteuerung.geklicktAbmelden();
+        try {
+            dieSteuerung.geklicktAbmelden();
+        } catch (Exception e) {
+            zeigeMeldung("Fehler beim Abmelden");
+        }
     }
 
     private void ausgewaehltEmpfaenger() {
@@ -135,7 +139,7 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     public void erfolgreichAngemeldet(String pBenutzername) {
-
+        zeigeFenstertitel(pBenutzername);
     }
 
     private void geklicktLoeschen() {

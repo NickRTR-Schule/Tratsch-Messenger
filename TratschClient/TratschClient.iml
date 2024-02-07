@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/TratschGemeinsam.jar!/" />
+          <root url="jar://$MODULE_DIR$/../TratschGemeinsam/dist/TratschGemeinsam.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

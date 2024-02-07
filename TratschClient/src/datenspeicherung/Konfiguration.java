@@ -1,8 +1,8 @@
 package datenspeicherung;
 
 public class Konfiguration {
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
 
     public Konfiguration(String host, int port) {
         this.host = host;
