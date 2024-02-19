@@ -117,11 +117,6 @@ public class Benutzerschnittstelle extends JFrame {
         }
     }
 
-    private void geklicktAnmelden() {
-        LoginFenster dasLoginFenster = new LoginFenster(this);
-        dasLoginFenster.setVisible(true);
-    }
-
     private void geklicktAbmelden() {
         try {
             dieSteuerung.geklicktAbmelden();
@@ -134,8 +129,11 @@ public class Benutzerschnittstelle extends JFrame {
         ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
     }
 
-    public void erfolgreichAbgemeldet() {
+    // TODO: abgewaehltEmpfaenger implementieren
 
+    public void erfolgreichAbgemeldet() {
+        zeigeFenstertitel("");
+        // Abmelden Btn -> Anmelden Btn
     }
 
     public void erfolgreichAngemeldet(String pBenutzername) {
