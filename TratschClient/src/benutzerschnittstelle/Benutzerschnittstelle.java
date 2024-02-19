@@ -5,6 +5,8 @@ import steuerung.Steuerung;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,13 +17,14 @@ public class Benutzerschnittstelle extends JFrame {
     private final JTextArea txtTextnachrichten;
     private final JLabel lblAn;
     private final JTextArea txtEingabeTextnachricht;
-    private final JButton btnAnmelden;
-    private final JButton btnAbmelden;
     private final JButton btnSenden;
     private final JButton btnLoeschen;
     private final JTextField txtEmpfaenger;
     private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
     DefaultListModel<String> model = new DefaultListModel<>();
+    //    private final JButton btnAnmelden;
+    //    private final JButton btnAbmelden;
+    private JButton logBtn;
     private Steuerung dieSteuerung;
     private LoginFenster dasLoginFenster;
 
@@ -43,6 +46,28 @@ public class Benutzerschnittstelle extends JFrame {
 
         IstAngemeldetBenutzer = new JList<>(model);
         IstAngemeldetBenutzer.setBounds(6, 6, 150, 299);
+        IstAngemeldetBenutzer.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ausgewaehltEmpfaenger();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         contentPane.add(IstAngemeldetBenutzer);
 
         txtTextnachrichten = new JTextArea();
@@ -57,15 +82,18 @@ public class Benutzerschnittstelle extends JFrame {
         txtEingabeTextnachricht.setBounds(168, 215, 348, 90);
         contentPane.add(txtEingabeTextnachricht);
 
-        btnAnmelden = new JButton("anmelden");
-        btnAnmelden.addActionListener(e -> oeffneLoginFenster());
-        btnAnmelden.setBounds(6, 317, 117, 29);
-        contentPane.add(btnAnmelden);
+        logBtn = ANMELDENBTN();
+        contentPane.add(logBtn);
 
-        btnAbmelden = new JButton("abmelden");
-        btnAbmelden.addActionListener(e -> geklicktAbmelden());
-        btnAbmelden.setBounds(132, 317, 117, 29);
-        contentPane.add(btnAbmelden);
+//        btnAnmelden = new JButton("anmelden");
+//        btnAnmelden.addActionListener(e -> oeffneLoginFenster());
+//        btnAnmelden.setBounds(6, 317, 117, 29);
+//        contentPane.add(btnAnmelden);
+//
+//        btnAbmelden = new JButton("abmelden");
+//        btnAbmelden.addActionListener(e -> geklicktAbmelden());
+//        btnAbmelden.setBounds(132, 317, 117, 29);
+//        contentPane.add(btnAbmelden);
 
         btnSenden = new JButton("senden");
         btnSenden.setBounds(261, 317, 117, 29);
@@ -101,6 +129,20 @@ public class Benutzerschnittstelle extends JFrame {
         });
     }
 
+    private JButton ANMELDENBTN() {
+        JButton btn = new JButton("anmelden");
+        btn.addActionListener(e -> oeffneLoginFenster());
+        btn.setBounds(6, 317, 117, 29);
+        return btn;
+    }
+
+    private JButton ABMELDEBTN() {
+        JButton btn = new JButton("abmelden");
+        btn.addActionListener(e -> geklicktAbmelden());
+        btn.setBounds(6, 317, 117, 29);
+        return btn;
+    }
+
     private void oeffneLoginFenster() {
         if (dasLoginFenster == null) {
             dasLoginFenster = new LoginFenster(this);
@@ -126,18 +168,21 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void ausgewaehltEmpfaenger() {
-        ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+        if (ausgewaehlteEmpfaenger.contains(txtEmpfaenger.getText())) {
+            ausgewaehlteEmpfaenger.remove(txtEmpfaenger.getText());
+        } else {
+            ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+        }
     }
-
-    // TODO: abgewaehltEmpfaenger implementieren
 
     public void erfolgreichAbgemeldet() {
         zeigeFenstertitel("");
-        // Abmelden Btn -> Anmelden Btn
+        logBtn = ANMELDENBTN();
     }
 
     public void erfolgreichAngemeldet(String pBenutzername) {
         zeigeFenstertitel(pBenutzername);
+        logBtn = ABMELDEBTN();
     }
 
     private void geklicktLoeschen() {
@@ -161,8 +206,9 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-        for (int i = 0; i < pAngemeldeteBenutzer.length; i++) {
-//    		model.addElement
+        model.clear();
+        for (String benutzer : pAngemeldeteBenutzer) {
+            model.addElement(benutzer);
         }
     }
 
