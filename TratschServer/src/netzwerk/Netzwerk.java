@@ -18,7 +18,7 @@ public class Netzwerk {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private Benutzerliste b;
-    private HashMap<String, ObjectOutputStream> user;
+    private final HashMap<String, ObjectOutputStream> user = new HashMap<>();
 
     public Netzwerk(Steuerung ps) {
         this.s = ps;

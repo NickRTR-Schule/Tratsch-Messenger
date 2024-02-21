@@ -4,16 +4,21 @@ import datenspeicherung.Konfiguration;
 import gemeinsam.*;
 import steuerung.Steuerung;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Netzwerk {
+
+    private final Logger logger = Logger.getLogger(Netzwerk.class.getName());
     private final Steuerung dieSteuerung;
     private final Socket socket;
     private final ObjectOutputStream outputStream;
-    private final ObjectInputStream inputStream;
+    private ObjectInputStream inputStream;
     private boolean angemeldet = false;
     private String benutzername = "";
 
@@ -22,13 +27,21 @@ public class Netzwerk {
         final Konfiguration dieKonfiguration = new Konfiguration("localhost", 6666);
         socket = new Socket(dieKonfiguration.liesHost(), dieKonfiguration.liesPort());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
-        inputStream = new ObjectInputStream(socket.getInputStream());
         final Thread inputThread = new Thread(() -> {
-            try {
-                final Botschaft botschaftIn = (Botschaft) inputStream.readObject();
-                behandleBotschaft(botschaftIn);
-            } catch (Exception ignored) {
-                // Ignore Exception
+            while (true) {
+                try {
+                    inputStream = new ObjectInputStream(socket.getInputStream());
+                    final Botschaft botschaftIn = (Botschaft) inputStream.readObject();
+                    SwingUtilities.invokeLater(() -> {
+                        try {
+                            behandleBotschaft(botschaftIn);
+                        } catch (IOException e) {
+                            logger.log(Level.SEVERE, e.getMessage(), e);
+                        }
+                    });
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage(), e);
+                }
             }
         });
         inputThread.start();
