@@ -70,6 +70,7 @@ public class Benutzerschnittstelle extends JFrame {
 
         txtTextnachrichten = new JTextArea();
         txtTextnachrichten.setBounds(168, 6, 348, 174);
+        txtTextnachrichten.setEditable(false);
         contentPane.add(txtTextnachrichten);
 
         lblAn = new JLabel("an:");
