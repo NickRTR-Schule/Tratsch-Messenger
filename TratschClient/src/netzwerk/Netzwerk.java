@@ -64,8 +64,8 @@ public class Netzwerk {
             schliesseVerbindung();
             benutzername = "";
             angemeldet = false;
-            dieSteuerung.zeigeMeldung("Logout erfolgreich");
             dieSteuerung.erfolgreichAbgemeldet();
+            dieSteuerung.zeigeMeldung("Logout erfolgreich");
         } else if (pBotschaft instanceof ServerBotschaftSendenTextnachrichtNOK) {
             dieSteuerung.zeigeMeldung("Senden nicht erfolgreich");
         } else if (pBotschaft instanceof ServerBotschaftTextnachricht) {
