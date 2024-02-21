@@ -138,7 +138,7 @@ public class Benutzerschnittstelle extends JFrame {
 
     }
 
-    public void geklicktAnmelden(String pBenutzername, String pPasswort) {
+    private void geklicktAnmelden(String pBenutzername, String pPasswort) {
         try {
             dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
             dasLoginFenster = null;
