@@ -70,6 +70,7 @@ public class Benutzerschnittstelle extends JFrame {
 
         txtTextnachrichten = new JTextArea();
         txtTextnachrichten.setBounds(168, 6, 348, 174);
+        txtTextnachrichten.setEditable(false);
         contentPane.add(txtTextnachrichten);
 
         lblAn = new JLabel("an:");
@@ -140,8 +141,6 @@ public class Benutzerschnittstelle extends JFrame {
     public void geklicktAnmelden(String pBenutzername, String pPasswort) {
         try {
             dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
-            // TODO: remove
-            dieSteuerung.erfolgreichAngemeldet(pBenutzername);
             dasLoginFenster = null;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -151,8 +150,6 @@ public class Benutzerschnittstelle extends JFrame {
     private void geklicktAbmelden() {
         try {
             dieSteuerung.geklicktAbmelden();
-            // TODO: remove
-            erfolgreichAbgemeldet();
         } catch (Exception e) {
             zeigeMeldung("Fehler beim Abmelden");
         }

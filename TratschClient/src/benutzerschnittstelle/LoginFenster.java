@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.Serial;
 
+
 public class LoginFenster extends JDialog {
 
     @Serial
