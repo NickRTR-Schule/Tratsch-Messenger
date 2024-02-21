@@ -3,28 +3,30 @@ package benutzerschnittstelle;
 import steuerung.Steuerung;
 
 import javax.swing.*;
-import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Benutzerschnittstelle extends JFrame {
 
     private final JPanel contentPane;
-    private final JList IstAngemeldetBenutzer;
+    private final JList<String> IstAngemeldetBenutzer;
     private final JTextArea txtTextnachrichten;
     private final JLabel lblAn;
     private final JTextArea txtEingabeTextnachricht;
-    private final JButton btnAnmelden;
-    private final JButton btnAbmelden;
     private final JButton btnSenden;
     private final JButton btnLoeschen;
     private final JTextField txtEmpfaenger;
     private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
+    DefaultListModel<String> model = new DefaultListModel<>();
+    //    private final JButton btnAnmelden;
+    //    private final JButton btnAbmelden;
+    private JButton logBtn;
     private Steuerung dieSteuerung;
+    private LoginFenster dasLoginFenster;
 
     public Benutzerschnittstelle() {
         setTitle("Tratsch");
@@ -39,11 +41,33 @@ public class Benutzerschnittstelle extends JFrame {
         try {
             dieSteuerung = new Steuerung(this);
         } catch (IOException e) {
-            // TODO-js: Add Exception Code: show exception message in window
+            JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
-        IstAngemeldetBenutzer = new JList();
+        IstAngemeldetBenutzer = new JList<>(model);
         IstAngemeldetBenutzer.setBounds(6, 6, 150, 299);
+        IstAngemeldetBenutzer.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ausgewaehltEmpfaenger();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         contentPane.add(IstAngemeldetBenutzer);
 
         txtTextnachrichten = new JTextArea();
@@ -58,36 +82,29 @@ public class Benutzerschnittstelle extends JFrame {
         txtEingabeTextnachricht.setBounds(168, 215, 348, 90);
         contentPane.add(txtEingabeTextnachricht);
 
-        btnAnmelden = new JButton("anmelden");
-        btnAnmelden.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                oeffneLoginFenster();
-            }
-        });
-        btnAnmelden.setBounds(6, 317, 117, 29);
-        contentPane.add(btnAnmelden);
+        logBtn = ANMELDENBTN();
+        contentPane.add(logBtn);
 
-        btnAbmelden = new JButton("abmelden");
-        btnAbmelden.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                geklicktAbmelden();
-            }
-        });
-        btnAbmelden.setBounds(132, 317, 117, 29);
-        contentPane.add(btnAbmelden);
+//        btnAnmelden = new JButton("anmelden");
+//        btnAnmelden.addActionListener(e -> oeffneLoginFenster());
+//        btnAnmelden.setBounds(6, 317, 117, 29);
+//        contentPane.add(btnAnmelden);
+//
+//        btnAbmelden = new JButton("abmelden");
+//        btnAbmelden.addActionListener(e -> geklicktAbmelden());
+//        btnAbmelden.setBounds(132, 317, 117, 29);
+//        contentPane.add(btnAbmelden);
 
         btnSenden = new JButton("senden");
         btnSenden.setBounds(261, 317, 117, 29);
+        btnSenden.addActionListener(e -> geklicktSenden());
         contentPane.add(btnSenden);
 
         btnLoeschen = new JButton("löschen");
+        btnLoeschen.addActionListener(e -> geklicktLoeschen());
         btnLoeschen.setBounds(399, 317, 117, 29);
         contentPane.add(btnLoeschen);
-        btnLoeschen.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                geklicktLoeschen();
-            }
-        });
+        btnLoeschen.addActionListener(e -> geklicktLoeschen());
 
         txtEmpfaenger = new JTextField();
         txtEmpfaenger.setBounds(196, 185, 320, 26);
@@ -112,63 +129,100 @@ public class Benutzerschnittstelle extends JFrame {
         });
     }
 
+    private JButton ANMELDENBTN() {
+        JButton btn = new JButton("anmelden");
+        btn.addActionListener(e -> oeffneLoginFenster());
+        btn.setBounds(6, 317, 117, 29);
+        return btn;
+    }
+
+    private JButton ABMELDEBTN() {
+        JButton btn = new JButton("abmelden");
+        btn.addActionListener(e -> geklicktAbmelden());
+        btn.setBounds(6, 317, 117, 29);
+        return btn;
+    }
+
     private void oeffneLoginFenster() {
-        LoginFenster dasLoginFenster = new LoginFenster(this);
-        dasLoginFenster.setVisible(true);
+        if (dasLoginFenster == null) {
+            dasLoginFenster = new LoginFenster(this);
+            dasLoginFenster.setVisible(true);
+        }
     }
 
     public void geklicktAnmelden(String pBenutzername, String pPasswort) {
-        dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
-    }
-
-    private void geklicktAnmelden() {
-        LoginFenster dasLoginFenster = new LoginFenster(this);
-        dasLoginFenster.setVisible(true);
+        try {
+            dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
+            dasLoginFenster = null;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void geklicktAbmelden() {
-        //dieSteuerung.geklicktAbmelden();
+        try {
+            dieSteuerung.geklicktAbmelden();
+        } catch (Exception e) {
+            zeigeMeldung("Fehler beim Abmelden");
+        }
     }
 
     private void ausgewaehltEmpfaenger() {
-        ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+        if (ausgewaehlteEmpfaenger.contains(txtEmpfaenger.getText())) {
+            ausgewaehlteEmpfaenger.remove(txtEmpfaenger.getText());
+        } else {
+            ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+        }
     }
 
     public void erfolgreichAbgemeldet() {
-    	
+        zeigeFenstertitel("");
+        logBtn = ANMELDENBTN();
     }
 
     public void erfolgreichAngemeldet(String pBenutzername) {
-
+        zeigeFenstertitel(pBenutzername);
+        logBtn = ABMELDEBTN();
     }
 
     private void geklicktLoeschen() {
-    	loescheEingabeTextnachricht();
+        loescheEingabeTextnachricht();
     }
 
     private void geklicktSenden() {
-    	loescheEingabeTextnachricht();
+        if (!ausgewaehlteEmpfaenger.isEmpty() && txtEingabeTextnachricht.getText() != null) {
+            String[] empfaenger = (String[]) ausgewaehlteEmpfaenger.toArray();
+            try {
+                dieSteuerung.sendeTextnachricht(empfaenger, txtEingabeTextnachricht.getText());
+                loescheEingabeTextnachricht();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
-    
+
     private void loescheEingabeTextnachricht() {
-    	txtEingabeTextnachricht.setText("");
+        txtEingabeTextnachricht.setText("");
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-
+        model.clear();
+        for (String benutzer : pAngemeldeteBenutzer) {
+            model.addElement(benutzer);
+        }
     }
 
     private void zeigeFenstertitel(String pBenutzername) {
-    	setTitle("Tratsch " + pBenutzername);
+        setTitle("Tratsch " + pBenutzername);
     }
 
     public void zeigeMeldung(String pMeldung) {
-    	JOptionPane.showMessageDialog(this, pMeldung);
+        JOptionPane.showMessageDialog(this, pMeldung);
     }
 
     public void zeigeTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
-    	txtTextnachrichten.append(pAbsender + " an " + pEmpfaenger + ":/r/n");
-    	txtTextnachrichten.append(pTextnachricht + "/r/n");
-    	txtTextnachrichten.append("---/r/n");
+        txtTextnachrichten.append(pAbsender + " an " + pEmpfaenger + ":/r/n");
+        txtTextnachrichten.append(pTextnachricht + "/r/n");
+        txtTextnachrichten.append("---/r/n");
     }
 }

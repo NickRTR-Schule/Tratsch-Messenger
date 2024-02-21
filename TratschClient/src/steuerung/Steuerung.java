@@ -16,18 +16,18 @@ public class Steuerung {
     }
 
     public void erfolgreichAbgemeldet() {
-    	dieBenutzerschnittstelle.erfolgreichAbgemeldet();
+        dieBenutzerschnittstelle.erfolgreichAbgemeldet();
     }
 
     public void erfolgreichAngemeldet(String pBenutzename) {
-    	dieBenutzerschnittstelle.erfolgreichAngemeldet(pBenutzename);
+        dieBenutzerschnittstelle.erfolgreichAngemeldet(pBenutzename);
     }
 
     public void erhaltenTextnachricht(String pAbsender, String pEmpfaenger, String pTextnachricht) {
         dieBenutzerschnittstelle.zeigeTextnachricht(pAbsender, pEmpfaenger, pTextnachricht);
     }
 
-    public void geklicktAbmelden() {
+    public void geklicktAbmelden() throws IOException {
         dasNetzwerk.meldeAb();
     }
 
@@ -40,19 +40,14 @@ public class Steuerung {
     }
 
     public void zeigeAngemeldeteBenutzer(String[] pAngemeldeteBenutzer) {
-    	dieBenutzerschnittstelle.zeigeAngemeldeteBenutzer(pAngemeldeteBenutzer);
+        dieBenutzerschnittstelle.zeigeAngemeldeteBenutzer(pAngemeldeteBenutzer);
     }
 
     public void zeigeMeldung(String pMeldung) {
         dieBenutzerschnittstelle.zeigeMeldung(pMeldung);
     }
 
-    public void geklicktAnmelden(String pBenutzername, String pPasswort) {
-        try {
-            dasNetzwerk.meldeAn(pBenutzername, pPasswort);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void geklicktAnmelden(String pBenutzername, String pPasswort) throws IOException {
+        dasNetzwerk.meldeAn(pBenutzername, pPasswort);
     }
 }

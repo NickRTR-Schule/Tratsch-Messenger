@@ -7,11 +7,10 @@ import steuerung.Steuerung;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Netzwerk {
-
-    private final Konfiguration dieKonfiguration;
     private final Steuerung dieSteuerung;
     private final Socket socket;
     private final ObjectOutputStream outputStream;
@@ -21,7 +20,21 @@ public class Netzwerk {
 
     public Netzwerk(Steuerung pSteuerung) throws IOException {
         dieSteuerung = pSteuerung;
-        dieKonfiguration = new Konfiguration("localhost", 8080);
+        final Konfiguration dieKonfiguration = new Konfiguration("localhost", 8080);
+        // TEST CODE
+        Thread server = new Thread(() -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(8080);
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    new ObjectOutputStream(socket.getOutputStream()).writeObject(new Object());
+                    socket.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+        server.start();
         socket = new Socket(dieKonfiguration.liesHost(), dieKonfiguration.liesPort()); //Throws Error
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         inputStream = new ObjectInputStream(socket.getInputStream());
@@ -30,20 +43,32 @@ public class Netzwerk {
                 final Botschaft botschaftIn = (Botschaft) inputStream.readObject();
                 behandleBotschaft(botschaftIn);
             } catch (Exception ignored) {
-
+                // Ignore Exception
             }
         });
         inputThread.start();
     }
 
-    private void behandleBotschaft(Botschaft pBotschaft) {
+    private void behandleBotschaft(Botschaft pBotschaft) throws IOException {
         if (pBotschaft instanceof ServerBotschaftAngemeldeteBenutzer) {
+            final String[] a = new String[((ServerBotschaftAngemeldeteBenutzer) pBotschaft).liesAngemeldeteBenutzer().size()];
+            ((ServerBotschaftAngemeldeteBenutzer) pBotschaft).liesAngemeldeteBenutzer().toArray(a);
+            dieSteuerung.zeigeAngemeldeteBenutzer(a);
         } else if (pBotschaft instanceof ServerBotschaftLoginNOK) {
+            dieSteuerung.zeigeMeldung("Login nicht erfolgreich");
         } else if (pBotschaft instanceof ServerBotschaftLoginOK) {
+            dieSteuerung.erfolgreichAngemeldet(benutzername);
         } else if (pBotschaft instanceof ServerBotschaftLogoutErzwungen) {
+            schliesseVerbindung();
         } else if (pBotschaft instanceof ServerBotschaftLogoutOK) {
+            schliesseVerbindung();
+            benutzername = "";
+            angemeldet = false;
+            dieSteuerung.erfolgreichAbgemeldet();
         } else if (pBotschaft instanceof ServerBotschaftSendenTextnachrichtNOK) {
+            dieSteuerung.zeigeMeldung("Senden nicht erfolgreich");
         } else if (pBotschaft instanceof ServerBotschaftTextnachricht) {
+            dieSteuerung.erhaltenTextnachricht(((ServerBotschaftTextnachricht) pBotschaft).liesAbsender(), ((ServerBotschaftTextnachricht) pBotschaft).liesEmpfaenger(), ((ServerBotschaftTextnachricht) pBotschaft).liesTextnachricht());
         }
     }
 
@@ -51,9 +76,8 @@ public class Netzwerk {
         return angemeldet;
     }
 
-    public void meldeAb() {
-        benutzername = "";
-        angemeldet = false;
+    public void meldeAb() throws IOException {
+        outputStream.writeObject(new ClientBotschaftLogout(benutzername));
     }
 
     public void meldeAn(String pBenutzername, String passwort) throws IOException {
@@ -65,6 +89,7 @@ public class Netzwerk {
 
     public void schliesseVerbindung() throws IOException {
         outputStream.writeObject(new ClientBotschaftLogout(benutzername));
+        socket.close();
     }
 
     public void sendeTextnachricht(String[] pEmpfaenger, String pTextnachricht) throws IOException {

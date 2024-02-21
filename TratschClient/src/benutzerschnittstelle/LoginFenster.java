@@ -3,19 +3,19 @@ package benutzerschnittstelle;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.Serial;
 
 public class LoginFenster extends JDialog {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private final JPanel contentPanel = new JPanel();
     private final JTextField txtBenutzername;
     private final JPasswordField txtPassword;
     private final JButton btnAnmelden;
     private final JButton btnAbbrechen;
-    private boolean geklicktAnmelden;
     private final Benutzerschnittstelle dieBenutzerschnittstelle;
+    private boolean geklicktAnmelden;
 
     public LoginFenster(Benutzerschnittstelle pBenutzerschnittstelle) {
         dieBenutzerschnittstelle = pBenutzerschnittstelle;
@@ -44,20 +44,12 @@ public class LoginFenster extends JDialog {
         contentPanel.add(txtPassword);
 
         btnAnmelden = new JButton("anmelden");
-        btnAnmelden.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                geklicktAnmelden();
-            }
-        });
+        btnAnmelden.addActionListener(e -> geklicktAnmelden());
         btnAnmelden.setBounds(7, 138, 117, 29);
         contentPanel.add(btnAnmelden);
 
         btnAbbrechen = new JButton("abbrechen");
-        btnAbbrechen.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                geklicktAbbrechen();
-            }
-        });
+        btnAbbrechen.addActionListener(e -> geklicktAbbrechen());
         btnAbbrechen.setBounds(7, 181, 117, 29);
         contentPanel.add(btnAbbrechen);
     }
@@ -66,13 +58,16 @@ public class LoginFenster extends JDialog {
         this.dispose();
     }
 
-	private void geklicktAnmelden()
-	{
-		String benutzername = txtBenutzername.getText();
-		String passwort = new String(txtPassword.getPassword());
-		dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
-		this.dispose();
-	}
+    private void geklicktAnmelden() {
+        if (txtBenutzername.getText().isEmpty() || txtPassword.getPassword() == null) {
+            JOptionPane.showMessageDialog(this, "Bitte geben Sie einen Benutzernamen und ein Passwort ein", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String benutzername = txtBenutzername.getText();
+            String passwort = new String(txtPassword.getPassword());
+            dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
+            this.dispose();
+        }
+    }
 
     public boolean hatGeklicktAnmelden() {
         return geklicktAnmelden;
