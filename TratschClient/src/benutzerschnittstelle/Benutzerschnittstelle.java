@@ -13,12 +13,8 @@ import java.util.ArrayList;
 public class Benutzerschnittstelle extends JFrame {
 
     private final JPanel contentPane;
-    private final JList<String> IstAngemeldetBenutzer;
     private final JTextArea txtTextnachrichten;
-    private final JLabel lblAn;
     private final JTextArea txtEingabeTextnachricht;
-    private final JButton btnSenden;
-    private final JButton btnLoeschen;
     private final JTextField txtEmpfaenger;
     private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
     private final JButton logBtn;
@@ -42,38 +38,15 @@ public class Benutzerschnittstelle extends JFrame {
             JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
-        IstAngemeldetBenutzer = new JList<>(model);
-        IstAngemeldetBenutzer.setBounds(6, 6, 150, 299);
-        IstAngemeldetBenutzer.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ausgewaehltEmpfaenger();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        contentPane.add(IstAngemeldetBenutzer);
+        JList<String> istAngemeldetBenutzer = getStringJList();
+        contentPane.add(istAngemeldetBenutzer);
 
         txtTextnachrichten = new JTextArea();
         txtTextnachrichten.setBounds(168, 6, 348, 174);
         txtTextnachrichten.setEditable(false);
         contentPane.add(txtTextnachrichten);
 
-        lblAn = new JLabel("an:");
+        JLabel lblAn = new JLabel("an:");
         lblAn.setBounds(168, 190, 61, 16);
         contentPane.add(lblAn);
 
@@ -87,23 +60,12 @@ public class Benutzerschnittstelle extends JFrame {
         logBtn.setBounds(6, 317, 117, 29);
         contentPane.add(logBtn);
 
-//===========bei verwendung von 2 dedizierten Buttons=========
-//        btnAnmelden = new JButton("anmelden"); 
-//        btnAnmelden.addActionListener(e -> oeffneLoginFenster());
-//        btnAnmelden.setBounds(6, 317, 117, 29);
-//        contentPane.add(btnAnmelden);
-//
-//        btnAbmelden = new JButton("abmelden");
-//        btnAbmelden.addActionListener(e -> geklicktAbmelden());
-//        btnAbmelden.setBounds(132, 317, 117, 29);
-//        contentPane.add(btnAbmelden);
-
-        btnSenden = new JButton("senden");
+        JButton btnSenden = new JButton("senden");
         btnSenden.setBounds(261, 317, 117, 29);
         btnSenden.addActionListener(e -> geklicktSenden());
         contentPane.add(btnSenden);
 
-        btnLoeschen = new JButton("löschen");
+        JButton btnLoeschen = new JButton("löschen");
         btnLoeschen.addActionListener(e -> geklicktLoeschen());
         btnLoeschen.setBounds(399, 317, 117, 29);
         contentPane.add(btnLoeschen);
@@ -130,6 +92,34 @@ public class Benutzerschnittstelle extends JFrame {
                 e.printStackTrace();
             }
         });
+    }
+
+    private JList<String> getStringJList() {
+        JList<String> istAngemeldetBenutzer = new JList<>(model);
+        istAngemeldetBenutzer.setBounds(6, 6, 150, 299);
+        istAngemeldetBenutzer.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ausgewaehltEmpfaenger();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        return istAngemeldetBenutzer;
     }
 
     private void oeffneLoginFenster() {

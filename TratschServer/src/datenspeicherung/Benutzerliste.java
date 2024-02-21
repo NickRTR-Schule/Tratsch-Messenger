@@ -4,14 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Benutzerliste {
     public boolean istGueltig(String pBenutzername, String pPasswort) {
         try {
-            String jsonString = new String(Files.readAllBytes(Paths.get("TratschServer/benutzerliste.json")), StandardCharsets.UTF_8);
+            String jsonString = Files.readString(Paths.get("TratschServer/benutzerliste.json"));
             //assign your JSON String here
             JSONObject obj = new JSONObject(jsonString);
 

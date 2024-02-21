@@ -14,11 +14,10 @@ import java.util.HashMap;
 
 public class Netzwerk {
     private final Steuerung s;
-    public T1 m;
-    private ServerSocket serverSocket;
-    private Socket clientSocket;
-    private Benutzerliste b;
     private final HashMap<String, ObjectOutputStream> user = new HashMap<>();
+    private T1 m;
+    private ServerSocket serverSocket;
+    private Benutzerliste b;
 
     public Netzwerk(Steuerung ps) {
         this.s = ps;
@@ -27,7 +26,7 @@ public class Netzwerk {
     public void bearbeiteVerbindung() {
         while (true) {
             try {
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
                 ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
                 ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                 Botschaft f = (Botschaft) in.readObject();
@@ -66,8 +65,8 @@ public class Netzwerk {
                                         // "Benutzername abgemeldet" anzeigen
                                         user.remove(this.user_name);
                                         this.client_out.writeObject(new ServerBotschaftLogoutOK());
-                                        // liste der angemeldeten Benutzer hat sich geändert (array aller angemeldeten Benutzer an steuerung schicken)
-                                        sendeAnAlleClients(new ServerBotschaftAngemeldeteBenutzer(new ArrayList<String>(user.keySet())));
+                                        // Liste der angemeldeten Benutzer hat sich geändert (array aller angemeldeten Benutzer an steuerung schicken)
+                                        sendeAnAlleClients(new ServerBotschaftAngemeldeteBenutzer(new ArrayList<>(user.keySet())));
                                         break;
                                     } else if (k instanceof ClientBotschaftSendenTextnachricht c) {
                                         this.client_out.writeObject(new ServerBotschaftTextnachricht(c.liesAbsender(), c.liesEmpfaenger(), c.liesTextnachricht()));
@@ -93,10 +92,7 @@ public class Netzwerk {
                 } else {
                     break;
                 }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

@@ -10,13 +10,9 @@ public class LoginFenster extends JDialog {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private final JPanel contentPanel = new JPanel();
     private final JTextField txtBenutzername;
     private final JPasswordField txtPassword;
-    private final JButton btnAnmelden;
-    private final JButton btnAbbrechen;
     private final Benutzerschnittstelle dieBenutzerschnittstelle;
-    private boolean geklicktAnmelden;
 
     public LoginFenster(Benutzerschnittstelle pBenutzerschnittstelle) {
         dieBenutzerschnittstelle = pBenutzerschnittstelle;
@@ -24,6 +20,7 @@ public class LoginFenster extends JDialog {
         setTitle("Anmeldung");
         setBounds(100, 100, 149, 245);
         getContentPane().setLayout(new BorderLayout());
+        JPanel contentPanel = new JPanel();
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
@@ -44,12 +41,12 @@ public class LoginFenster extends JDialog {
         txtPassword.setBounds(6, 100, 130, 26);
         contentPanel.add(txtPassword);
 
-        btnAnmelden = new JButton("anmelden");
+        JButton btnAnmelden = new JButton("anmelden");
         btnAnmelden.addActionListener(e -> geklicktAnmelden());
         btnAnmelden.setBounds(7, 138, 117, 29);
         contentPanel.add(btnAnmelden);
 
-        btnAbbrechen = new JButton("abbrechen");
+        JButton btnAbbrechen = new JButton("abbrechen");
         btnAbbrechen.addActionListener(e -> geklicktAbbrechen());
         btnAbbrechen.setBounds(7, 181, 117, 29);
         contentPanel.add(btnAbbrechen);
@@ -68,19 +65,5 @@ public class LoginFenster extends JDialog {
             dieBenutzerschnittstelle.geklicktAnmelden(benutzername, passwort);
             this.dispose();
         }
-    }
-
-    public boolean hatGeklicktAnmelden() {
-        return geklicktAnmelden;
-    }
-    
-    public String liesBenutzername()
-    {
-    return txtBenutzername.getText();	
-    }
-    
-    public String liesPassword()
-    {
-    	return new String(txtPassword.getPassword());
     }
 }
