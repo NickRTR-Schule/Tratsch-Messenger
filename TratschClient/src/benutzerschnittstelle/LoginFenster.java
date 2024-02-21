@@ -72,4 +72,14 @@ public class LoginFenster extends JDialog {
     public boolean hatGeklicktAnmelden() {
         return geklicktAnmelden;
     }
+    
+    public String liesBenutzername()
+    {
+    return txtBenutzername.getText();	
+    }
+    
+    public String liesPassword()
+    {
+    	return new String(txtPassword.getPassword());
+    }
 }
