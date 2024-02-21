@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<geraetestandort>
+    <id_geraet></id_geraet>
+    <standort>
+        <zeitpunkt></zeitpunkt>
+        <latitude></latitude>
+        <longitude></longitude>
+    </standort>
+    <standort>
+        <zeitpunkt></zeitpunkt>
+        <latitude></latitude>
+        <longitude></longitude>
+    </standort>
+    <standort>
+        <zeitpunkt></zeitpunkt>
+        <latitude></latitude>
+        <longitude></longitude>
+    </standort>
+    <standort>
+        <zeitpunkt></zeitpunkt>
+        <latitude></latitude>
+        <longitude></longitude>
+    </standort>
+
+</geraetestandort>

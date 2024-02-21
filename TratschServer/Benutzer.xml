@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListeBenutzer>
+    <benutzer>
+        <benutzername>User1</benutzername>
+        <password>Pass1</password>
+    </benutzer>
+    <benutzer>
+        <benutzername>User2</benutzername>
+        <password>Pass2</password>
+    </benutzer>
+    <benutzer>
+        <benutzername>User3</benutzername>
+        <password>Pass3</password>
+    </benutzer>
+</ListeBenutzer>
