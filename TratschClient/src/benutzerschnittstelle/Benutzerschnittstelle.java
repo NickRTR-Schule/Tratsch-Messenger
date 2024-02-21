@@ -21,10 +21,8 @@ public class Benutzerschnittstelle extends JFrame {
     private final JButton btnLoeschen;
     private final JTextField txtEmpfaenger;
     private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
+    private final JButton logBtn;
     DefaultListModel<String> model = new DefaultListModel<>();
-    //    private final JButton btnAnmelden;
-    //    private final JButton btnAbmelden;
-    private JButton logBtn;
     private Steuerung dieSteuerung;
     private LoginFenster dasLoginFenster;
 
@@ -82,7 +80,10 @@ public class Benutzerschnittstelle extends JFrame {
         txtEingabeTextnachricht.setBounds(168, 215, 348, 90);
         contentPane.add(txtEingabeTextnachricht);
 
-        logBtn = ANMELDENBTN();
+        logBtn = new JButton();
+        logBtn.setText("anmelden");
+        logBtn.addActionListener(e -> logBtnAction());
+        logBtn.setBounds(6, 317, 117, 29);
         contentPane.add(logBtn);
 
 //        btnAnmelden = new JButton("anmelden");
@@ -129,30 +130,18 @@ public class Benutzerschnittstelle extends JFrame {
         });
     }
 
-    private JButton ANMELDENBTN() {
-        JButton btn = new JButton("anmelden");
-        btn.addActionListener(e -> oeffneLoginFenster());
-        btn.setBounds(6, 317, 117, 29);
-        return btn;
-    }
-
-    private JButton ABMELDEBTN() {
-        JButton btn = new JButton("abmelden");
-        btn.addActionListener(e -> geklicktAbmelden());
-        btn.setBounds(6, 317, 117, 29);
-        return btn;
-    }
-
     private void oeffneLoginFenster() {
-        if (dasLoginFenster == null) {
-            dasLoginFenster = new LoginFenster(this);
-            dasLoginFenster.setVisible(true);
-        }
+        dasLoginFenster = new LoginFenster(this);
+        dasLoginFenster.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        dasLoginFenster.setVisible(true);
+
     }
 
     public void geklicktAnmelden(String pBenutzername, String pPasswort) {
         try {
             dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
+            // TODO: remove
+            dieSteuerung.erfolgreichAngemeldet(pBenutzername);
             dasLoginFenster = null;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -162,6 +151,8 @@ public class Benutzerschnittstelle extends JFrame {
     private void geklicktAbmelden() {
         try {
             dieSteuerung.geklicktAbmelden();
+            // TODO: remove
+            erfolgreichAbgemeldet();
         } catch (Exception e) {
             zeigeMeldung("Fehler beim Abmelden");
         }
@@ -177,12 +168,24 @@ public class Benutzerschnittstelle extends JFrame {
 
     public void erfolgreichAbgemeldet() {
         zeigeFenstertitel("");
-        logBtn = ANMELDENBTN();
+        logBtn.setText("anmelden");
+        logBtn.setBounds(6, 317, 117, 29);
+        contentPane.add(logBtn);
     }
 
     public void erfolgreichAngemeldet(String pBenutzername) {
         zeigeFenstertitel(pBenutzername);
-        logBtn = ABMELDEBTN();
+        logBtn.setText("abmelden");
+        logBtn.setBounds(6, 317, 117, 29);
+        contentPane.add(logBtn);
+    }
+
+    private void logBtnAction() {
+        if (dieSteuerung.istAngemeldet()) {
+            geklicktAbmelden();
+        } else {
+            oeffneLoginFenster();
+        }
     }
 
     private void geklicktLoeschen() {
