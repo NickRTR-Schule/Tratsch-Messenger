@@ -87,7 +87,8 @@ public class Benutzerschnittstelle extends JFrame {
         logBtn.setBounds(6, 317, 117, 29);
         contentPane.add(logBtn);
 
-//        btnAnmelden = new JButton("anmelden");
+//===========bei verwendung von 2 dedizierten Buttons=========
+//        btnAnmelden = new JButton("anmelden"); 
 //        btnAnmelden.addActionListener(e -> oeffneLoginFenster());
 //        btnAnmelden.setBounds(6, 317, 117, 29);
 //        contentPane.add(btnAnmelden);
@@ -138,7 +139,7 @@ public class Benutzerschnittstelle extends JFrame {
 
     }
 
-    private void geklicktAnmelden(String pBenutzername, String pPasswort) {
+    public void geklicktAnmelden(String pBenutzername, String pPasswort) { //muss public sein, da es im Login-Fenster aufgerufen wird
         try {
             dieSteuerung.geklicktAnmelden(pBenutzername, pPasswort);
             dasLoginFenster = null;
@@ -177,7 +178,7 @@ public class Benutzerschnittstelle extends JFrame {
         contentPane.add(logBtn);
     }
 
-    private void logBtnAction() {
+    private void logBtnAction() { //fuer einen Button, der an- und abmeldet
         if (dieSteuerung.istAngemeldet()) {
             geklicktAbmelden();
         } else {
