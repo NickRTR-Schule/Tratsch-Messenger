@@ -18,7 +18,7 @@ public class Benutzerschnittstelle extends JFrame {
     private final JTextField txtEmpfaenger;
     private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
     private final JButton logBtn;
-    DefaultListModel<String> model = new DefaultListModel<>();
+    private final DefaultListModel<String> model = new DefaultListModel<>();
     private Steuerung dieSteuerung;
     private LoginFenster dasLoginFenster;
 

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--This File represents the list of users as a xml file. This isn't used in the Application, but it shows the difference between json and xml and that both can be used -->
 <ListeBenutzer>
     <benutzer>
         <benutzername>User1</benutzername>

@@ -1,2 +1,5 @@
+# Output for Binary Code
 out/
+
+# Eclipse Default output for binary Code. Should not be used, all projects are based on out/
 bin/
