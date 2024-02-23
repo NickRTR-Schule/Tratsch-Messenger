@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Benutzerschnittstelle extends JFrame {
 
@@ -15,7 +16,7 @@ public class Benutzerschnittstelle extends JFrame {
     private final JTextArea txtTextnachrichten;
     private final JTextArea txtEingabeTextnachricht;
     private final JTextField txtEmpfaenger;
-    private final ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
+    private ArrayList<String> ausgewaehlteEmpfaenger = new ArrayList<>();
     private final JButton logBtn;
     private final DefaultListModel<String> model = new DefaultListModel<>();
     private Steuerung dieSteuerung;
@@ -98,8 +99,9 @@ public class Benutzerschnittstelle extends JFrame {
         istAngemeldetBenutzer.setBounds(6, 6, 150, 299);
         istAngemeldetBenutzer.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                ausgewaehltEmpfaenger();
+            public void mouseClicked (MouseEvent e){
+                String benutzername = istAngemeldetBenutzer.getSelectedValue();
+                ausgewaehltEmpfaenger(benutzername);
             }
 
             @Override
@@ -145,11 +147,22 @@ public class Benutzerschnittstelle extends JFrame {
         }
     }
 
-    private void ausgewaehltEmpfaenger() {
-        if (ausgewaehlteEmpfaenger.contains(txtEmpfaenger.getText())) {
-            ausgewaehlteEmpfaenger.remove(txtEmpfaenger.getText());
+
+    private void ausgewaehltEmpfaenger(String benutzername) {
+        if (txtEmpfaenger.getText().contains(benutzername)){
+            final ArrayList<String> userNames = new ArrayList<>(List.of(txtEmpfaenger.getText().split(",")));
+            //sort alphabetically?
+            txtEmpfaenger.setText("");
+            for (String currentUsername : userNames) {
+                if (currentUsername.equals(benutzername)){
+                    userNames.remove(currentUsername);
+                } else {
+                    txtEmpfaenger.setText(txtEmpfaenger.getText() + ", " + currentUsername);
+                }
+            }
+            ausgewaehlteEmpfaenger = userNames;
         } else {
-            ausgewaehlteEmpfaenger.add(txtEmpfaenger.getText());
+            txtEmpfaenger.setText(txtEmpfaenger.getText() + ", " + benutzername);
         }
     }
 
@@ -180,14 +193,18 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktSenden() {
-        if (!ausgewaehlteEmpfaenger.isEmpty() && txtEingabeTextnachricht.getText() != null) {
-            String[] empfaenger = (String[]) ausgewaehlteEmpfaenger.toArray();
+        if (ausgewaehlteEmpfaenger.isEmpty() && txtEingabeTextnachricht.getText().isBlank()) {
+            String[] empfaenger = txtEmpfaenger.getText().split(";");
             try {
                 dieSteuerung.sendeTextnachricht(empfaenger, txtEingabeTextnachricht.getText());
                 loescheEingabeTextnachricht();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Bitte stellen Sie sicher" +
+                    ", dass mindestens ein Empfänger ausgewählt und eine Nachricht eingegeben " +
+                    "wurde.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
