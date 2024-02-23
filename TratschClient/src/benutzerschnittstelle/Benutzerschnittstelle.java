@@ -100,10 +100,13 @@ public class Benutzerschnittstelle extends JFrame {
         istAngemeldetBenutzer.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked (MouseEvent e){
-                String benutzername = istAngemeldetBenutzer.getSelectedValue();
-                ausgewaehltEmpfaenger(benutzername);
+                try {
+                    String benutzername = istAngemeldetBenutzer.getSelectedValue();
+                    ausgewaehltEmpfaenger(benutzername);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(null, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
             }
@@ -193,18 +196,20 @@ public class Benutzerschnittstelle extends JFrame {
     }
 
     private void geklicktSenden() {
-        if (ausgewaehlteEmpfaenger.isEmpty() && txtEingabeTextnachricht.getText().isBlank()) {
-            String[] empfaenger = txtEmpfaenger.getText().split(";");
-            try {
-                dieSteuerung.sendeTextnachricht(empfaenger, txtEingabeTextnachricht.getText());
-                loescheEingabeTextnachricht();
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (dieSteuerung.istAngemeldet()) {
+            if (ausgewaehlteEmpfaenger.isEmpty() && txtEingabeTextnachricht.getText().isBlank()) {
+                String[] empfaenger = txtEmpfaenger.getText().split(";");
+                try {
+                    dieSteuerung.sendeTextnachricht(empfaenger, txtEingabeTextnachricht.getText());
+                    loescheEingabeTextnachricht();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(this, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Bitte stellen Sie sicher" +
+                        ", dass mindestens ein Empfänger ausgewählt und eine Nachricht eingegeben " +
+                        "wurde.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Bitte stellen Sie sicher" +
-                    ", dass mindestens ein Empfänger ausgewählt und eine Nachricht eingegeben " +
-                    "wurde.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
